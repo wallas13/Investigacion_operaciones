@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block header %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/index.js')}}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}">
+{% endblock %}
+
+{% block body %}
+<div class="container-bg">
+
+</div>
+<div class="container" style="height: 100vh">
+    <div class="row d-flex justify-content-center align-items-center" style="height: 100%">
+        <div class="col-12 p-5 ">
+            <div class="main main-form">
+                <h3 class="main-form-title">Ingrese los siguientes datos</h3>
+                <div class="main-form-form">
+                    <form action="{{ url_for('data')}}" method="POST">
+                        <div class="form-group mb-4">
+                            <label for="metodo" class="main-labels">Seleccione el metodo de solución</label>
+                            <div class="content-select">
+                                <select class="form-control select" name="tipoMetodo" id="">
+                                    <option value="metodoGrafico" selected="true"> Metodo grafico</option>
+                                </select>
+                                <i></i>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="variable" class="main-labels">Ingrese el numero de variables</label>
+                            <div class="container-input input-variables">
+                                <input id="variables" type="number" name="numVariables" id="variable" class="form-control">
+                                <i></i>
+                                <i></i>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="ecuaciones" class="main-labels"> Ingrese la cantidad de restricciones</label>
+                            <div class="container-input input-ecuaciones">
+                                <input id="ecuaciones" name="numRestricciones" class="form-control" type="number" value="1">
+                                <i></i>
+                                <i></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-second w-100" id="btnSent">
+                                Empezar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

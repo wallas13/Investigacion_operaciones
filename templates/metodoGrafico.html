@@ -1,0 +1,147 @@
+{% extends 'layout.html'%}
+
+{% block title %}
+Método gráfico
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modelo.css')}}">
+<script type="text/javascript" src="{{ url_for('static', filename='js/modelo.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="bg-top">
+    <h1 class="mb-5 page-title">Método gráfico</h1>
+</div>
+<div class="container-info">
+    <div class="slider">
+        <div class="info-page">
+            <h3 class="form-title">Modelo</h3>
+            <table class="modelo-table">
+                <tbody>
+                    <tr>
+                        <th>Función objetivo ({{ MaxMin }})</th>
+                        <td>{{ fo.__html__() | safe }}</td>
+                    </tr>
+
+                    {% for res in restricciones %}
+
+                        <tr>
+                            <th>Restriccion No. {{ loop.index }}</th>
+                            <td>{{ res.__html__() | safe }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <th>No negatividad</th>
+                        <td> X<sub>1</sub>, X<sub>2</sub> &ge; 0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 class="form-title">Gráfica</h3>
+            <img src="{{nom}}">
+            <h3 class="form-title">Tabla</h3>
+            <table class="modelo-sol">
+                <thead>
+                    <tr>
+                        <th>Punto</th>
+                        <th>Coordenada X</th>
+                        <th>Coordenada Y</th>
+                        <th>Valor de la función objetivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in data_table['puntos'] %}
+                        {% if data['Solu'] %}
+
+                            <tr class="row-selected">
+                                <td class="values">{{ data['Punto']}}</td>
+                                <td class="values">{{ data['Coordenada X (X1)'] }}</td>
+                                <td class="values">{{ data['Coordenada Y (X2)'] }}</td>
+                                <td class="values">{{ data['Valor de la función objetivo (Z)'] }}</td>
+                            </tr>
+
+                        {% else %}
+
+                            <tr>
+                                <td class="values">{{ data['Punto']}}</td>
+                                <td class="values">{{ data['Coordenada X (X1)'] }}</td>
+                                <td class="values">{{ data['Coordenada Y (X2)'] }}</td>
+                                <td class="values">{{ data['Valor de la función objetivo (Z)'] }}</td>
+                            </tr>
+                        
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function convert(){
+        if(document.getElementById('checkbox').checked){
+            $(".values").each(function(){
+                if ( $(this).text() % 1 != 0) {
+                    var result = toFraction($(this).text());
+                    $(this).text(result[0]+'/'+result[1]);
+                }
+            });
+        }else{
+            $(".values").each(function(){
+                if ( $(this).text() % 1 != 0) {
+                    $(this).text(toDecimal($(this).text()));
+                }
+            });
+        }
+    }
+
+    var toFraction = function (decimal) {
+        var negative = decimal < 0;
+        decimal = Math.abs(decimal);
+        var final = false;
+        
+        var value1 = 0, aux1 = 1, value2 = 1, aux2 = 0, epoch = 0, val = decimal, epsilon = 1e-13;
+        while (!final) {
+            epoch++;
+            if (epoch > 10000) {
+                final = true;
+            }
+            var valint = parseInt(val);
+            var result = value1 + valint * value2;
+            var denom = aux1 + valint * aux2;
+            var conv = (val - valint);
+            if (conv < epsilon) {
+                final = true;
+            }
+            val = 1 / conv;
+            value1 = value2;
+            aux1 = aux2;
+            value2 = result;
+            aux2 = denom;
+            if (Math.abs(result / denom - decimal) < epsilon || epoch > 30) {
+                final = true;
+            }
+        }
+        return [negative ? -result : result, denom];
+    };
+
+    function toDecimal(frac){
+        let total = frac;
+        if (frac.search("/") != -1){
+            const numbers = frac.split("/");
+            total = parseFloat(numbers[0]) / parseFloat(numbers[1]);
+        }
+        return total
+    }
+    
+    window.addEventListener("beforeunload", async function(event){
+        var direccion = '{{nom}}';
+        var partes = direccion.split('/');
+        var url = "http://127.0.0.1:5000/delete";
+        let image={image:partes[partes.length-1]}
+        await fetch(url,{
+            method:'POST',
+            body:JSON.stringify(image)
+        });
+    });
+</script>
+{% endblock %}

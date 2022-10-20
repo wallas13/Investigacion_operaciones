@@ -1,0 +1,88 @@
+
+.page-title{
+    color: rgb(0, 0, 0);
+}
+.container{
+    margin-top: 70px;
+}
+.form-title{
+    font-size: 20px;
+    color: #00406A;
+}
+.in-function{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    flex-flow: row nowrap;
+}
+.grid-container{
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    grid-template-rows: 1fr;
+    align-items: center;
+    grid-auto-flow: row;
+    grid-auto-rows: 100px;
+}
+.grid-container > .grid-select{
+    display: flex;
+}
+.grid-container > .grid-select input{
+    width: 80% !important;
+    margin: 0px 10px;
+}
+.grid-div{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-rows: 1fr;
+    grid-gap: 10px;
+    grid-auto-flow: row;
+}
+.grid-div div{
+    display: flex;
+}
+.grid-div div span{
+    min-width: 60px;
+    width: 60px;
+    text-align: center;
+}
+.grid-div > select{
+    margin: 0px 20px 0px 0px;
+}
+.resOperand{
+    max-width: 50px;
+    padding: 0px 0px 0px 0px !important;
+    text-align-last: center;
+}
+.row-container{
+    height: 100%;
+}
+.form-control:focus{
+    border: 1px solid #000000;
+    box-shadow:  0 0 0.25rem rgba(26, 51, 240, 0.5);
+}
+
+.inputOut{
+    display: inline-block !important;
+    width: 100%;
+}
+
+@media screen and (max-width: 990px){
+    .grid-container{
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    }
+}
+
+.banner{
+
+    width: 100%; 
+    height: 100px;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

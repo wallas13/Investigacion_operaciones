@@ -1,0 +1,13 @@
+#btnSent{
+    height: 50px;
+    background-color: #c56464;
+    border-radius: 50px;
+}
+.alert{
+    position: absolute !important;
+    width: 80%;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
