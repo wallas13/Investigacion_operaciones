@@ -14,6 +14,8 @@ class Ecuacion:
         #25x+2y = 600 --- ejemplo
         #y= -15x + 5
         if self.y != 0 and self.x !=0:
+            print(self.x)
+            print(self.y)
             return {
                 'x':((-1)*self.x)/ (self.y if self.y !=0 else 1),
                 'resultado':self.resultado/(self.y if self.y !=0 else 1),
@@ -43,6 +45,10 @@ class Ecuacion:
             result = (dicPropio['resultado']*(-1) ) + dicEcua['resultado']
             x = result/(x if x !=0 else 1)
             y = dicPropio['x']*x + dicPropio['resultado']
+            #if (x==3.25):
+             #   print(dicPropio['resultado'])
+              #  print(dicEcua['resultado'])
+               # print(result)
         elif dicPropio['tipo']=='puntx' and dicEcua['tipo']=='puntx':
             return None 
         elif dicPropio['tipo']=='punty' and dicEcua['tipo']=='punty':

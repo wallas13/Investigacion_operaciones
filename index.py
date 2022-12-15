@@ -181,7 +181,7 @@ def grafico(data):
     # SE PROCESAN LOS DATOS QUE SE VAN A VER EN LA TABLA
     #Estos son los datos que debe incluir la tabla
     datos_tabla=tabla(puntosSoli,func_obj, func_obj_ecua)
-    puntosSoli = reordenarpunt(puntosSoli,restricciones)
+    
     if resmax(restricciones):
         may = mayor(restricciones,max_range_x)
         puntosSoli.append(Coord(max_range_x, (max_range_y if max_range_y > may else may)))
